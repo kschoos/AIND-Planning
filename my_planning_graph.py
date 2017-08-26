@@ -517,6 +517,8 @@ class PlanningGraph():
         :return: bool
         """
 
+        # Return failure if all of the parents (all the actions that achieve this literal)
+        # of one literal are mutually exclusive with all of the parents of the other literal.
         return all([a_1.is_mutex(a_2) for a_1 in node_s1.parents for a_2 in node_s2.parents])
 
     def h_levelsum(self) -> int:
@@ -524,6 +526,8 @@ class PlanningGraph():
 
         :return: int
         """
+
+        # for each goal in the problem, determine the level cost, then add them together
         level_sum = 0
         for goal in self.problem.goal:
             for level_cost, s_level in enumerate(self.s_levels):
@@ -531,6 +535,4 @@ class PlanningGraph():
                     level_sum += level_cost
                     break
 
-        # TODO implement
-        # for each goal in the problem, determine the level cost, then add them together
         return level_sum
